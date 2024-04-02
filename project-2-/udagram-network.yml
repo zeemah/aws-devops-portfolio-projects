@@ -1,0 +1,265 @@
+Description: >
+  Halima Usman -Udacity- Udagram IaC Project 2
+  This script deploys a VPC,  a two pair  of public and private subnets spread 
+  across in different  Availabilty Zones. It deploys an Internet Gateway, with a default 
+  route on the public subnets. It deploys a pair of NAT Gateways (one in each AZ), 
+  and default routes for them in the private subnets.
+
+
+Parameters:
+  
+  UdagramEnvironmentName:
+      Description: An environment name that will be prefixed to resource names
+      Type: String
+
+  UdagramVpcCIDR: 
+      Description: Input the IP range (CIDR notation) for this VPC
+      Type: String
+      Default: 10.0.0.0/16
+
+  UdagramPublicSubnet1CIDR:
+      Description: Input the IP range (CIDR notation) for the public subnet in the first Availability Zone
+      Type: String
+      Default: 10.0.0.0/24
+
+  UdagramPublicSubnet2CIDR:
+      Description: Input the IP range (CIDR notation) for the public subnet in the second Availability Zone
+      Type: String
+      Default: 10.0.1.0/24
+
+  UdagramPrivateSubnet1CIDR:
+      Description: Input the IP range (CIDR notation) for the private subnet in the first Availability Zone
+      Type: String
+      Default: 10.0.2.0/24
+
+  UdagramPrivateSubnet2CIDR:
+      Description: Input the IP range (CIDR notation) for the private subnet in the second Availability Zone
+      Type: String
+      Default: 10.0.3.0/24
+
+
+Resources:
+
+  UdagramVPC: 
+      Type: AWS::EC2::VPC
+      Properties:
+          CidrBlock: !Ref UdagramVpcCIDR
+          EnableDnsHostnames: true
+          Tags: 
+              - Key: Name 
+                Value: !Ref UdagramEnvironmentName
+          
+  UdagramInternetGateway:
+      Type: AWS::EC2::InternetGateway
+      Properties:
+          Tags:
+              - Key: Name
+                Value: !Ref UdagramEnvironmentName
+          
+  UdagramInternetGatewayAttachment:
+      Type: AWS::EC2::VPCGatewayAttachment
+      Properties:
+          InternetGatewayId: !Ref UdagramInternetGateway
+          VpcId: !Ref UdagramVPC
+
+  UdagramPublicSubnet1: 
+      Type: AWS::EC2::Subnet
+      Properties:
+          VpcId: !Ref UdagramVPC
+          AvailabilityZone: !Select [ 0, !GetAZs '']
+          CidrBlock: !Ref UdagramPublicSubnet1CIDR
+          MapPublicIpOnLaunch: true
+          Tags: 
+              - Key: Name 
+                Value: !Sub ${UdagramEnvironmentName} Public Subnet (AZ1)
+
+  UdagramPublicSubnet2: 
+      Type: AWS::EC2::Subnet
+      Properties:
+          VpcId: !Ref UdagramVPC
+          AvailabilityZone: !Select [ 1, !GetAZs '' ]
+          CidrBlock: !Ref UdagramPublicSubnet2CIDR
+          MapPublicIpOnLaunch: true
+          Tags: 
+              - Key: Name 
+                Value: !Sub ${UdagramEnvironmentName} Public Subnet (AZ2)
+
+  UdagramPrivateSubnet1: 
+      Type: AWS::EC2::Subnet
+      Properties:
+          VpcId: !Ref UdagramVPC
+          AvailabilityZone: !Select [ 0, !GetAZs '' ]
+          CidrBlock: !Ref UdagramPrivateSubnet1CIDR
+          MapPublicIpOnLaunch: false
+          Tags: 
+              - Key: Name 
+                Value: !Sub ${UdagramEnvironmentName} Private Subnet (AZ1)
+
+  UdagramPrivateSubnet2: 
+      Type: AWS::EC2::Subnet
+      Properties:
+          VpcId: !Ref UdagramVPC
+          AvailabilityZone: !Select [ 1, !GetAZs '' ]
+          CidrBlock: !Ref UdagramPrivateSubnet2CIDR
+          MapPublicIpOnLaunch: false
+          Tags: 
+              - Key: Name 
+                Value: !Sub ${UdagramEnvironmentName} Private Subnet (AZ2)
+
+  NatGateway1EIP:
+      Type: AWS::EC2::EIP
+      DependsOn: UdagramInternetGatewayAttachment
+      Properties: 
+          Domain: vpc
+
+  NatGateway2EIP:
+      Type: AWS::EC2::EIP
+      DependsOn: UdagramInternetGatewayAttachment
+      Properties:
+          Domain: vpc
+
+  NatGateway1: 
+      Type: AWS::EC2::NatGateway
+      Properties: 
+          AllocationId: !GetAtt NatGateway1EIP.AllocationId
+          SubnetId: !Ref UdagramPublicSubnet1
+
+  NatGateway2: 
+      Type: AWS::EC2::NatGateway
+      Properties:
+          AllocationId: !GetAtt NatGateway2EIP.AllocationId
+          SubnetId: !Ref UdagramPublicSubnet2
+
+  UdagramPublicRouteTable:
+      Type: AWS::EC2::RouteTable
+      Properties: 
+          VpcId: !Ref UdagramVPC
+          Tags: 
+              - Key: Name 
+                Value: !Sub ${UdagramEnvironmentName} Public Routes
+
+  DefaultPublicRoute: 
+      Type: AWS::EC2::Route
+      DependsOn: UdagramInternetGatewayAttachment
+      Properties: 
+          RouteTableId: !Ref UdagramPublicRouteTable
+          DestinationCidrBlock: 0.0.0.0/0
+          GatewayId: !Ref UdagramInternetGateway
+
+  PublicSubnet1RouteTableAssociation:
+      Type: AWS::EC2::SubnetRouteTableAssociation
+      Properties:
+          RouteTableId: !Ref UdagramPublicRouteTable
+          SubnetId: !Ref UdagramPublicSubnet1
+
+  PublicSubnet2RouteTableAssociation:
+      Type: AWS::EC2::SubnetRouteTableAssociation
+      Properties:
+          RouteTableId: !Ref UdagramPublicRouteTable
+          SubnetId: !Ref UdagramPublicSubnet2
+    
+
+  UdagramPrivateRouteTable1:
+      Type: AWS::EC2::RouteTable
+      Properties: 
+          VpcId: !Ref UdagramVPC
+          Tags: 
+              - Key: Name 
+                Value: !Sub ${UdagramEnvironmentName} Private Routes (AZ1)
+
+  DefaultPrivateRoute1:
+      Type: AWS::EC2::Route
+      Properties:
+          RouteTableId: !Ref UdagramPrivateRouteTable1
+          DestinationCidrBlock: 0.0.0.0/0
+          NatGatewayId: !Ref NatGateway1
+
+  PrivateSubnet1RouteTableAssociation:
+      Type: AWS::EC2::SubnetRouteTableAssociation
+      Properties:
+          RouteTableId: !Ref UdagramPrivateRouteTable1
+          SubnetId: !Ref UdagramPrivateSubnet1
+
+  PrivateRouteTable2:
+      Type: AWS::EC2::RouteTable
+      Properties: 
+          VpcId: !Ref UdagramVPC
+          Tags: 
+              - Key: Name 
+                Value: !Sub ${UdagramEnvironmentName} Private Routes (AZ2)
+
+  DefaultPrivateRoute2:
+      Type: AWS::EC2::Route
+      Properties:
+          RouteTableId: !Ref PrivateRouteTable2
+          DestinationCidrBlock: 0.0.0.0/0
+          NatGatewayId: !Ref NatGateway2
+
+  PrivateSubnet2RouteTableAssociation:
+      Type: AWS::EC2::SubnetRouteTableAssociation
+      Properties:
+          RouteTableId: !Ref PrivateRouteTable2
+          SubnetId: !Ref UdagramPrivateSubnet2
+
+#output data for exports 
+Outputs: 
+
+  UdagramVPC: 
+      Description: A reference to the created VPC
+      Value: !Ref UdagramVPC
+      Export:
+        Name: !Sub ${UdagramEnvironmentName}-VPCID
+
+  VPCPublicRouteTable:
+      Description: Public Routing
+      Value: !Ref UdagramPublicRouteTable
+      Export:
+        Name: !Sub ${UdagramEnvironmentName}-PUB-RT
+
+  VPCPrivateRouteTable1:
+      Description: Private Routing AZ1
+      Value: !Ref UdagramPrivateRouteTable1
+      Export:
+        Name: !Sub ${UdagramEnvironmentName}-PRI1-RT
+
+  VPCPrivateRouteTable2:
+      Description: Private Routing AZ2
+      Value: !Ref PrivateRouteTable2
+      Export:
+        Name: !Sub ${UdagramEnvironmentName}-PRI2-RT
+
+  UdagramPublicSubnets:
+      Description: A list of the public subnets
+      Value: !Join [ ",", [ !Ref UdagramPublicSubnet1, !Ref UdagramPublicSubnet2 ]]
+      Export:
+        Name: !Sub ${UdagramEnvironmentName}-PUB-NETS
+
+  UdagramPrivateSubnets:
+      Description: A list of the private subnets
+      Value: !Join [ ",", [ !Ref UdagramPrivateSubnet1, !Ref UdagramPrivateSubnet2 ]]
+      Export:
+        Name: !Sub ${UdagramEnvironmentName}-PRIV-NETS
+
+  UdagramPublicSubnet1:
+      Description: A reference to the public subnet in the 1st Availability Zone
+      Value: !Ref UdagramPublicSubnet1
+      Export:
+        Name: !Sub ${UdagramEnvironmentName}-PUB1-SN
+
+  UdagramPublicSubnet2: 
+      Description: A reference to the public subnet in the 2nd Availability Zone
+      Value: !Ref UdagramPublicSubnet2
+      Export:
+        Name: !Sub ${UdagramEnvironmentName}-PUB2-SN
+
+  UdagramPrivateSubnet1:
+      Description: A reference to the private subnet in the 1st Availability Zone
+      Value: !Ref UdagramPrivateSubnet1
+      Export:
+        Name: !Sub ${UdagramEnvironmentName}-PRI1-SN
+
+  UdagramPrivateSubnet2: 
+      Description: A reference to the private subnet in the 2nd Availability Zone
+      Value: !Ref UdagramPrivateSubnet2
+      Export:
+        Name: !Sub ${UdagramEnvironmentName}-PRI2-SN
