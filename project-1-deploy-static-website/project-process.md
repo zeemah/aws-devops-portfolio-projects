@@ -162,3 +162,20 @@ Sometimes the local machine's network setting or firewall might block, or the br
 ![Configurations - Cache behavior, key and origin requests](/img/21.png)
 
 In this example, the Domain Name value is dgf7z6g067r6d.cloudfront.net, **but yours will be different**.
+
+## Step 6: Access Website in Web Browser
+
+**Note** - In the steps below, the exact domain name and the S3 URLs will be different in your case.
+
+1. Open a web browser like Google Chrome, and paste the copied CloudFront domain name (such as, `dgf7z6g067r6d.cloudfront.net`) *without appending* `/index.html `at the end. The CloudFront domain name should show you the content of the default home-page, as shown below:
+
+![cloudfront- configuations- origin details](/img/22.png)
+The figure above shows the page displayed at `https://dgf7z6g067r6d.cloudfront.net`
+
+2. Access the website via website-endpoint, such as `http://<bucket-name>.s3-website.us-east-2.amazonaws.com/`.
+
+3. Access the bucket object via its S3 object URL, such as,` https://<bucket-name>.s3.amazonaws.com/index.html`.
+
+All three links: CloudFront domain name, S3 object URL, and website-endpoint will show you the same `index.html` content.
+
+**If we were not "hosting" the website on S3, we could have made the bucket private and host the content only through the CloudFront domain name. In such a case, we cannot access the private content using S3 object URL and website-endpoint.**

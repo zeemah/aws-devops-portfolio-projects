@@ -1,0 +1,12 @@
+# Ignore compiled Java class files
+*.class
+
+# Ignore log files
+*.log
+
+# Ignore a specific directory
+temp/
+bootsrap/
+fontawesome-free/
+jquery/
+
