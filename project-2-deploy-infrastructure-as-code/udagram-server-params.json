@@ -1,0 +1,12 @@
+[
+	{
+		"ParameterKey": "UdagramEnvironmentName",
+		"ParameterValue": "Halima-Udagram-IaC-Project"
+	},
+	
+    {  
+		"ParameterKey": "UdagramAMImage",
+		"ParameterValue": "ami-0729e439b6769d6ab"
+	}
+    	
+]
