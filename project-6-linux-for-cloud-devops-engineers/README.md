@@ -1,4 +1,4 @@
-![linux]()
+![linux](https://github.com/zeemah/aws-devops-portfolio-projects/blob/main/project-6-linux-for-cloud-devops-engineers/linux.png)
 
 ## Skills
 
