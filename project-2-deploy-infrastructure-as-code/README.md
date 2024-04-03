@@ -10,6 +10,8 @@ There will be two parts to this project:
 - Diagram: You'll first develop a diagram that you can present as part of your portfolio and as a visual aid to understand the CloudFormation script.
 - Script (Template and Parameters): The second part is to interpret the instructions and create a matching CloudFormation script.
 
+## Starter Code
+You will find starter code for the project in this Github repository.
 
 ## Problem
 
