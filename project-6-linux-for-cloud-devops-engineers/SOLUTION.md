@@ -24,7 +24,7 @@
     4. Add ‘aws’ group as secondary group to the ‘user1’
     command `usermod -G aws user1`
 
-    ![file structure](https://github.com/zeemah/aws-devops-portfolio-projects/blob/main/project-6-linux-for-cloud-devops-engineers/README.md)
+    ![file structure](https://github.com/zeemah/aws-devops-portfolio-projects/blob/main/project-6-linux-for-cloud-devops-engineers/linux.png)
 
     5. Create the file and directory structure shown in the above diagram.
     - command to get to root directory `cd ~`
