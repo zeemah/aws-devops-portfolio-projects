@@ -5,5 +5,5 @@ This repo contains my DevOps portfolio projects.
 2. Project 2: Deploy Infrastructure as Code using AWS CloudFormation
    ##### Tools: CloudFormation, AWS CLI
 3. Project 3: Give your application Auto-deploy superpowers - CI/CD
-   ##### Tools: CircleCI, CloudFormation, Ansible, Prometheus, Grafana, Alert Manager, Amazon RDS
+   ##### Tools: CircleCI, CloudFormation, Ansible, Prometheus, Grafana, Alert Manager, Amazon RDS, AWS CLI, AWS
 4. 
