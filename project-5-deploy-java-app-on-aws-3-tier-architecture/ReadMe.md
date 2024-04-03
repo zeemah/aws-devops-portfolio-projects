@@ -1,5 +1,5 @@
 # Project Title: Deploy Java Application on AWS 3-Tier Architecture
-
+![architecture](https://github.com/zeemah/aws-devops-portfolio-projects/blob/main/project-5-deploy-java-app-on-aws-3-tier-architecture/architectural-design.png)
 ### Goal
 
 Goal of this project is to deploy scalable, highly available and secured Java application on 3-tier architecture and provide application access to the end users from public internet.
