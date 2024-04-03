@@ -27,7 +27,7 @@ This needs to be automated so that the infrastructure can be discarded as soon a
 
 **Optional** - To add more challenge to the project, once the project is completed, you can try deploying sample website files located in a public S3 Bucket to the Apache Web Server running on an EC2 instance. Though, it is not the part of the project rubric.
 
-
+![architechture](https://github.com/zeemah/aws-devops-portfolio-projects/blob/main/project-2-deploy-infrastructure-as-code/udagram-architecture.jpg)
 ## Project Requirements
 
 ### Server specs
