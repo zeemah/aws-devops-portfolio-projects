@@ -1,0 +1,21 @@
+<paste log output from Kubernetes-mediated prediction, here>
+
+NAME                            READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/flaskapp        1/1     1            1           47s
+
+NAME                                       DESIRED   CURRENT   READY   AGE
+replicaset.apps/flaskapp-5bb987f58d        1         1         1       48s
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.100.0.1   <none>        443/TCP   23h
+
+NAME                                 READY   STATUS             RESTARTS          AGE
+pod/flaskapp-5bb987f58d-grpk7        1/1     Running            0                 51s
+
+
+Port: 8000
+{
+  "prediction": [
+    20.35373177134412
+  ]
+}
