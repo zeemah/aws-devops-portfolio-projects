@@ -205,12 +205,11 @@
     sudo tail -n 1 /etc/passwd
     ```
 7. Login to AWS and create 5GB EBS volume in the same AZ of the EC2 instance and attach EBS volume to the Instance.
-    ![ebs volume](ebs on terminal)
+    ![ebs volume](https://github.com/zeemah/aws-devops-portfolio-projects/blob/main/project-6-linux-for-cloud-devops-engineers/ebs-on-terminal.png)
 8. Login as ‘root’user `sudo su -`
     1. Create File System on the new EBS volume attached in the previous step
-    ![ebs volume](ebs-attached)
-    ![ebs volume](ebs-on-terminal)
-    ![ebs volume](ebs-mkfs)
+    ![ebs volume](https://github.com/zeemah/aws-devops-portfolio-projects/blob/main/project-6-linux-for-cloud-devops-engineers/ebs-attached.png)
+    ![ebs volume](https://github.com/zeemah/aws-devops-portfolio-projects/blob/main/project-6-linux-for-cloud-devops-engineers/ebs-mkfs.png)
 
     ```
     lsblk # to list all the  block devices
@@ -224,7 +223,7 @@
     mount /dev/xvdb /data #to mount the ew volume 
     ```
     3. Verify File System utilization using ‘df -h’ command – This command must show /data file system
-    ![ebs volume](ebs-df-h)
+    ![ebs volume](https://github.com/zeemah/aws-devops-portfolio-projects/blob/main/project-6-linux-for-cloud-devops-engineers/ebs-mount-df-h.png)
     ```
     df -h /data  #or just `df -h`
     ```
