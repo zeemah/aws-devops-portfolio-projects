@@ -17,4 +17,4 @@ Currently application code is staged into GitHub repository and the requirement 
 
 ## Verification
 1. Verify that the code is now showing in the Bitbucket repo.
-**Note:** Explore various other options to migrate the code from Github to Bitbucket and add the possibilities in the comments.
+##### **Note:** Explore various other options to migrate the code from Github to Bitbucket and add the possibilities in the comments.
