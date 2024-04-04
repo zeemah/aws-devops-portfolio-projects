@@ -130,15 +130,27 @@
     ```
     sudo  mkdir home/user2/dir1
     ```
-    2. Change to “/dir2/dir1/dir2/dir10” directory and create file “/opt/dir14/dir10/f1” using relative path method. **start here tomorrow**
+    2. Change to “/dir2/dir1/dir2/dir10” directory and create file “/opt/dir14/dir10/f1” using relative path method.
     ```
     sudo cd /dir2/dir1/dir2/dir10
+    sudo mkdir ../../../opt/dir14
+    sudo mkdir ../../../opt/dir14/dir10
     sudo touch ../../../opt/dir14/dir10/f1
     ```
+
     3. Move the file from “/opt/dir14/dir10/f1” to  user1 home directory
     ```
     sudo mv /opt/dir14/dir10/f1 /home/user1/
     ```
     4. Delete the directory recursively “/dir4”
+    ```
+    sudo rm -r /dir4
+    ```
     5. Delete all child files and directories under “/opt/dir14” using single command.
+    ```
+    sudo rm -r /opt/dir14/*
+    ```
     6. Write this text “Linux assessment for an DevOps Engineer!! Learn with Fun!!” to the /f3 file and save it.
+    ```
+    echo "Linux assessment for an DevOps Engineer!! Learn with Fun!!" > /f3
+    ```
