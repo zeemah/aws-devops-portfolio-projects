@@ -1,13 +1,13 @@
 ## Deployment solution
 1. Login to the server as super user `sudo su -`
     1. Create users and set passwords – user1, user2, user3 
-    create user1 `useradd user1`
-    set password `passwd user1`
+    - create user1 `useradd user1`
+    - set password `passwd user1`
     **Note this prompts you to type in the new password for the user**
-    create user2 `useradd user2`
-    set password `passwd user2`
-    create user3 `useradd user3`
-    set password `passwd user3`
+    - create user2 `useradd user2`
+    - set password `passwd user2`
+    - create user3 `useradd user3`
+    - set password `passwd user3`
 
     **Note to list users user `cat /etc/passwd`**
 
@@ -22,9 +22,9 @@
     - command `usermod -g devops user3`
 
     4. Add ‘aws’ group as secondary group to the ‘user1’
-    command `usermod -G aws user1`
+    - command `usermod -G aws user1`
 
-    ![file structure]()
+    ![file structure](https://github.com/zeemah/aws-devops-portfolio-projects/blob/main/project-6-linux-for-cloud-devops-engineers/linux.png)
 
     5. Create the file and directory structure shown in the above diagram.
     - command to get to root directory `cd ~`
