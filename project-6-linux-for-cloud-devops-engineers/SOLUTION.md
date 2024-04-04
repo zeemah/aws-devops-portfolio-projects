@@ -154,3 +154,125 @@
     ```
     echo "Linux assessment for an DevOps Engineer!! Learn with Fun!!" > /f3
     ```
+
+5. Login as ‘user2’ 
+- command `sudo su user2` 
+    1. Create file “/dir1/f2”
+    ```
+    sudo mkdir  /dir1 && cd /dir1
+    sudo touch f2
+    ```
+    2. Delete /dir6
+    ```
+    sudo rm -r /dir6
+    ```
+    3. Delete /dir8
+    ```
+    sudo rm -r /dir8
+    ```
+    4. Replace the “DevOps” text to “devops” in the /f3 file without using  editor.
+    ```
+    sudo sed -i 's/DevOps/devops/g' /f3
+    ```
+    5. Using Vi-Editor copy the line1 and paste 10 times in the file /f3.
+    - open the file in vim editor `sudo vi f3`
+    - Move the cursor to the first line.
+    - Copy the line using `yy` (yank) command.
+    - Move the cursor to where you want to paste the copied line (e.g., 10 lines down).
+    - Paste the copied line using the `p` command.
+    - Repeat steps 4 and 5 as necessary to paste the line multiple times.
+    - Save and exit the file by pressing `Esc` to ensure you're in command mode, then typing `:wq` (write and quit) and pressing Enter.
+
+    6. Search for the pattern “Engineer” and replace with “engineer” in the file /f3 using single command.
+    ```
+    sudo sed -i 's/Engineer/engineer/g' /f3
+    ```
+    7. Delete /f3
+    ```
+    sudo rm f3
+    ```
+6. Login as ‘root’ user  `sudo su -`
+    1. Search for the file name ‘f3’ in the server and list all absolute  paths where f3 file is found.
+    ```
+    sudo find / -type f -name 'f3' 2>/dev/null
+    ```
+    2. Show the count of the number of files in the directory ‘/’
+    ```
+    sudo find / -type f | wc -l
+    ```
+    3. Print last line of the file ‘/etc/passwd’
+    ```
+    sudo tail -n 1 /etc/passwd
+    ```
+7. Login to AWS and create 5GB EBS volume in the same AZ of the EC2 instance and attach EBS volume to the Instance.
+    ![ebs volume](ebs on terminal)
+8. Login as ‘root’user `sudo su -`
+    1. Create File System on the new EBS volume attached in the previous step
+    ![ebs volume](ebs-attached)
+    ![ebs volume](ebs-on-terminal)
+    ![ebs volume](ebs-mkfs)
+
+    ```
+    lsblk # to list all the  block devices
+    mkfs -t ext4 /dev/xvdb #to create the file system
+    ```
+
+    2. Mount the File System on /data directory
+
+    ```
+    mkdir /data # to create a directory where you want to mount the ebs volume
+    mount /dev/xvdb /data #to mount the ew volume 
+    ```
+    3. Verify File System utilization using ‘df -h’ command – This command must show /data file system
+    ![ebs volume](ebs-df-h)
+    ```
+    df -h /data  #or just `df -h`
+    ```
+    4. Create file ‘f1’ in the /data file system.
+    ```
+    touch /data/f1
+    ls /data #to confirm the file was created
+    ```
+
+9. Login as ‘user5’ `sudo su user5`
+    1. Delete /dir1 `sudo rm /dir1`
+    2. Delete /dir2 `sudo rm /dir2`
+    3. Delete /dir3 `sudo rm /dir3`
+    4. Delete /dir5 `sudo rm /dir5`
+    5. Delete /dir7 `sudo rm /dir7`
+    6. Delete /f1 & /f4 `sudo rm /f1 /f4`
+    7. Delete /opt/dir14     `sudo rm -r /opt/dir14`
+
+10. Logins as ‘root’ user `sudo su -`
+    1. Delete users – ‘user1, user2, user3, user4, user5’
+    ```
+    sudo userdel user1
+    sudo userdel user2
+    sudo userdel user3
+    sudo userdel user4
+    sudo userdel user5
+    ```
+    2. Delete groups – app, aws, database, devops
+    ```
+    sudo groupdel app
+    sudo groupdel aws
+    sudo groupdel database
+    sudo groupdel devops
+    ```
+    3. Delete home directories  of all users ‘user1, user2, user3, user4, user5’ if any exists still.
+    ```
+    sudo userdel -r user1
+    sudo userdel -r user2
+    sudo userdel -r user3
+    sudo userdel -r user4
+    sudo userdel -r user5
+    ```
+    4. Unmount /data file system
+    ```
+    sudo umount /data
+    ```
+    5. Delete /data directory
+    ```
+    sudo rm -r /data
+    ```
+11. Login to AWS and detach EBS volume to the EC2 Instance and delete the volume and then terminate EC2 instance.
