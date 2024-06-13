@@ -11,7 +11,8 @@ Attach these Policies to the newly created user.
 - IAMFullAccess
 
 One more inline policy we need to create with content as below: 
-    ``` { 
+``` 
+    { 
         "Version": "2012-10-17",
         "Statement": [ 
             { 
@@ -21,7 +22,8 @@ One more inline policy we need to create with content as below:
                 "Resource": "*" 
             } 
         ] 
-    } ```
+    } 
+```
 
 Attach this policy to your user as well.
 
@@ -338,23 +340,25 @@ withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'EKS-1
     }
 
 #### Create a Jenkinsfile on the main branch . 
-pipeline { 
-    agent any
-    stages { 
-        stage('Deploy To Kubernetes') { 
-            steps { 
-                withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'EKS-1', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', serverUrl: 'https://B7C7C20487B2624AAB0AD54DF1469566.yl4.ap-south-1.eks.amazonaws.com']]) { 
-                    sh "kubectl apply -f deployment-service.yml"
+```
+    pipeline { 
+        agent any
+        stages { 
+            stage('Deploy To Kubernetes') { 
+                steps { 
+                    withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'EKS-1', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', serverUrl: 'https://B7C7C20487B2624AAB0AD54DF1469566.yl4.ap-south-1.eks.amazonaws.com']]) { 
+                        sh "kubectl apply -f deployment-service.yml"
+                        } 
+                } 
+            }
+            stage('verify Deployment') { 
+                steps { withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'EKS-1', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', serverUrl: 'https://B7C7C20487B2624AAB0AD54DF1469566.yl4.ap-south-1.eks.amazonaws.com']]) { 
+                    sh "kubectl get svc -n webapps" 
                     } 
-            } 
-        }
-        stage('verify Deployment') { 
-            steps { withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'EKS-1', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', serverUrl: 'https://B7C7C20487B2624AAB0AD54DF1469566.yl4.ap-south-1.eks.amazonaws.com']]) { 
-                sh "kubectl get svc -n webapps" 
                 } 
             } 
         } 
-    } 
-}
+    }
+```
 
 As you Jenkinsfile is created your Pipeline will automatically start the build and Deployment.
