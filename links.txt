@@ -40,7 +40,9 @@ https://lnkd.in/dC2WdBzP
 
 https://lnkd.in/dRXZVggt
 
-11. Deploy Disaster Recovery of Workloads on AWS: Warm Standby
+11. Microservice CI/CD Pipeline
+
+12. Deploy Disaster Recovery of Workloads on AWS: Warm Standby
 
 https://lnkd.in/dx3aY9VJ
 
