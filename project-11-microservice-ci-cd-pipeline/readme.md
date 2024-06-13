@@ -1,6 +1,6 @@
 # MICROSERVICE CI/CD PIPELINE (E-COMMERCE WEBSITE)
 
-![microservices-img]([microservices.png](https://github.com/zeemah/aws-devops-portfolio-projects/blob/main/project-11-microservice-ci-cd-pipeline/microservices.png))
+![microservices.png](https://github.com/zeemah/aws-devops-portfolio-projects/blob/main/project-11-microservice-ci-cd-pipeline/microservices.png)
 
 ## Project Overview
 - Project name:  Microservice CI/CD pipeline
