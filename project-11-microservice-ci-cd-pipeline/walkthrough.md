@@ -328,10 +328,10 @@ To run the secret.yml file: `kubectl apply -f secret.yml -n webapps`
 **Save the token .**
 
 -Create a dummy job in your Jenkins with Pipeline job and go to the **pipeline syntax** and select **With Kubernetes:Configure Kubernetes**
-    1. **Credentials** – Provide the Token that you have saved .
-    2. **Kubernates Endpoint API**- You can find it in your AWS EKS cluster.
-    3. **Cluster name**- Provide any name.
-    4. **NameSpace** – webapps
+1. **Credentials** – Provide the Token that you have saved .
+2. **Kubernates Endpoint API**- You can find it in your AWS EKS cluster.
+3. **Cluster name**- Provide any name.
+4. **NameSpace** – webapps
 Click on Generate Syntax.
 You will get pipeline syntax :-
 withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'EKS-1', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', serverUrl: 'https://B7C7C20487B2624AAB0AD54DF1469566.yl4.ap-south-1.eks.amazonaws.com']]) { 
